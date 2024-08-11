@@ -4,8 +4,38 @@ import { Button } from "@/components/ui/button";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import Filter from "@/components/shared/Filter";
 import HomeFilters from "@/components/home/HomeFilters";
+import NoResult from "@/components/shared/NoResult";
 
 import { HomePageFilters } from "@/constants/filters";
+
+const questions = [
+  // {
+  //   _id: 1,
+  //   title: "Redux Toolkit Not Updating State as Expected",
+  //   tags: [
+  //     { _id: 1, name: "react" },
+  //     { _id: 2, name: "redux" },
+  //   ],
+  //   author: "John Doe",
+  //   upvotes: 10,
+  //   views: 100,
+  //   answers: 2,
+  //   createdAt: "2021-09-01T12:00:00.000Z",
+  // },
+  // {
+  //   _id: 2,
+  //   title: "How to Perfectly Center a Div with Tailwind CSS?",
+  //   tags: [
+  //     { _id: 1, name: "tailwind" },
+  //     { _id: 2, name: "css" },
+  //   ],
+  //   author: "John Doe",
+  //   upvotes: 10,
+  //   views: 100,
+  //   answers: 2,
+  //   createdAt: "2021-09-01T12:00:00.000Z",
+  // },
+];
 
 export default function Home() {
   return (
@@ -37,6 +67,19 @@ export default function Home() {
       </div>
 
       <HomeFilters />
+
+      <div className="mt-10 flex w-full flex-col gap-6">
+        {questions.length > 0 ? (
+          questions.map((question) => "QuestionCard")
+        ) : (
+          <NoResult
+            title="There's no question to show"
+            description="Be the first to break the silence! 🚀 Ask a Question and kickstart the discussion. our query could be the next big thing others learn from. Get involved! 💡"
+            link="/ask-question"
+            linkTitle="Ask a Question"
+          />
+        )}
+      </div>
     </>
   );
 }
