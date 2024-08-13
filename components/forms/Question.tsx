@@ -9,6 +9,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { QuestionsSchema } from "@/lib/validations";
 
+import { createQuestion } from "@/lib/actions/question.action";
+
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -39,12 +41,14 @@ const Question = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof QuestionsSchema>) {
+  async function onSubmit(values: z.infer<typeof QuestionsSchema>) {
     setIsSubmitting(true);
 
     try {
       // make an async call to your API -> create a question
       // contain all form data
+      await createQuestion({});
+
       // navigate to home page
     } catch (error) {
     } finally {
@@ -131,6 +135,8 @@ const Question = () => {
                     // @ts-ignore
                     editorRef.current = editor;
                   }}
+                  onBlur={field.onBlur}
+                  onEditorChange={(content) => field.onChange(content)}
                   initialValue=""
                   init={{
                     height: 350,
