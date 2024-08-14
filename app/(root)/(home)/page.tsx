@@ -1,5 +1,7 @@
 import Link from "next/link";
 
+import { getQuestions } from "@/lib/actions/question.action";
+
 import { Button } from "@/components/ui/button";
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import Filter from "@/components/shared/Filter";
@@ -9,44 +11,9 @@ import QuestionCard from "@/components/cards/QuestionCard";
 
 import { HomePageFilters } from "@/constants/filters";
 
-const questions = [
-  {
-    _id: "1",
-    title: "Redux Toolkit Not Updating State as Expected",
-    tags: [
-      { _id: "1", name: "react" },
-      { _id: "2", name: "redux" },
-    ],
-    author: {
-      _id: "1",
-      name: "John Doe",
-      picture: "https://randomuser.me/api/portraits/men/1.jpg",
-    },
-    upvotes: 1500000,
-    views: 500552,
-    answers: [],
-    createdAt: new Date("2024-03-01T12:00:00.000Z"),
-  },
-  {
-    _id: "2",
-    title: "How to Perfectly Center a Div with Tailwind CSS?",
-    tags: [
-      { _id: "1", name: "tailwind" },
-      { _id: "2", name: "css" },
-    ],
-    author: {
-      _id: "2",
-      name: "Jane Smith",
-      picture: "https://randomuser.me/api/portraits/women/2.jpg",
-    },
-    upvotes: 20,
-    views: 200,
-    answers: [],
-    createdAt: new Date("2021-09-01T12:00:00.000Z"),
-  },
-];
+export default async function Home() {
+  const result = await getQuestions({});
 
-export default function Home() {
   return (
     <>
       <div className="flex w-full flex-col-reverse justify-between gap-4 sm:flex-row sm:items-center">
@@ -78,8 +45,8 @@ export default function Home() {
       <HomeFilters />
 
       <div className="mt-10 flex w-full flex-col gap-6">
-        {questions.length > 0 ? (
-          questions.map((question) => (
+        {result.questions.length > 0 ? (
+          result.questions.map((question) => (
             <QuestionCard
               key={question._id}
               _id={question._id}
