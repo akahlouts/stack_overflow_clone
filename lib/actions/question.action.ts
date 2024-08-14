@@ -36,5 +36,9 @@ export async function createQuestion(params: any) {
     await Question.findByIdAndUpdate(question._id, {
       $push: { tags: { $each: tagDocuments } },
     });
+
+    // Create an interaction record for the user's ask_question action
+
+    // Increment author's reputation by +5 points for creating a question
   } catch (error) {}
 }
