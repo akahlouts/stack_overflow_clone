@@ -1,5 +1,7 @@
 "use server";
 
+import { revalidatePath } from "next/cache";
+
 import { connectToDatabase } from "../mongoose";
 
 import User from "@/database/user.model";
@@ -32,7 +34,7 @@ export async function createUser(userData: CreateUserParams) {
 
     const newUser = await User.create(userData);
 
-    return JSON.parse(JSON.stringify(newUser));
+    return newUser;
   } catch (error) {
     console.log(error);
     throw error;
@@ -43,13 +45,11 @@ export async function updateUser(params: UpdateUserParams) {
   try {
     connectToDatabase();
 
-    const { clerkId, updateData } = params;
+    const { clerkId, updateData, path } = params;
 
-    const updatedUser = await User.findOneAndUpdate({ clerkId }, updateData, {
-      new: true,
-    });
+    await User.findOneAndUpdate({ clerkId }, updateData, { new: true });
 
-    return JSON.parse(JSON.stringify(updatedUser));
+    revalidatePath(path);
   } catch (error) {
     console.log(error);
     throw error;
@@ -84,7 +84,7 @@ export async function deleteUser(params: DeleteUserParams) {
     // delete user from database
     const deletedUser = await User.findOneAndDelete(user._id);
 
-    return deletedUser ? JSON.parse(JSON.stringify(deletedUser)) : null;
+    return deletedUser;
   } catch (error) {
     console.log(error);
     throw error;

@@ -64,6 +64,7 @@ export interface CreateQuestionParams {
   content: string;
   tags: string[];
   author: Schema.Types.ObjectId | IUser;
+  path: string;
 }
 
 export interface GetQuestionByIdParams {
@@ -131,6 +132,7 @@ export interface GetAllUsersParams {
 export interface UpdateUserParams {
   clerkId: string;
   updateData: Partial<IUser>;
+  path: string;
 }
 
 export interface ToggleSaveQuestionParams {
