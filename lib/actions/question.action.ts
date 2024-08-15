@@ -1,7 +1,5 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-
 import { connectToDatabase } from "../mongoose";
 
 import Question from "@/database/question.model";
@@ -31,7 +29,7 @@ export async function createQuestion(params: CreateQuestionParams) {
     // connect to DB
     connectToDatabase();
 
-    const { title, content, tags, author, path } = params;
+    const { title, content, tags, author } = params;
 
     // Create the question
     const question = await Question.create({
@@ -60,6 +58,5 @@ export async function createQuestion(params: CreateQuestionParams) {
     // Create an interaction record for the user's ask_question action
 
     // Increment author's reputation by +5 points for creating a question
-    revalidatePath(path);
   } catch (error) {}
 }
