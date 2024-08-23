@@ -12,6 +12,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProfileLink from "@/components/shared/ProfileLink";
 import Stats from "@/components/shared/Stats";
 import QuestionTab from "@/components/shared/QuestionTab";
+import AnswersTab from "@/components/shared/AnswersTab";
 
 import { URLProps } from "@/types";
 
@@ -98,7 +99,11 @@ const Page = async ({ params, searchParams }: URLProps) => {
               />
             </TabsTrigger>
             <TabsTrigger value="answers" className="tab">
-              AnswersTab
+              <AnswersTab
+                searchParams={searchParams}
+                userId={userInfo.user._id}
+                clerkId={clerkId}
+              />
             </TabsTrigger>
           </TabsList>
           <TabsContent value="top-posts">POSTS</TabsContent>

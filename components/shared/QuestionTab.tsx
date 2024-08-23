@@ -1,4 +1,4 @@
-import { getUserQuestions } from "@/lib/actions/question.action";
+import { getUserQuestions } from "@/lib/actions/user.action";
 
 import QuestionCard from "../cards/QuestionCard";
 
