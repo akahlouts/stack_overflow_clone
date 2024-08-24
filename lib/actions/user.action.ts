@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { clerkClient } from "@clerk/nextjs/server";
 import { FilterQuery } from "mongoose";
 
 import { connectToDatabase } from "../mongoose";
@@ -56,6 +57,15 @@ export async function updateUser(params: UpdateUserParams) {
     const { clerkId, updateData, path } = params;
 
     await User.findOneAndUpdate({ clerkId }, updateData, { new: true });
+
+    const firstName = updateData.name.split(" ")[0];
+    const lastName = updateData.name.split(" ")[1];
+
+    await clerkClient().users.updateUser(clerkId, {
+      firstName,
+      lastName,
+      username: updateData.username,
+    });
 
     revalidatePath(path);
   } catch (error) {

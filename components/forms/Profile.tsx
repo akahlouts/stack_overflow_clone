@@ -1,10 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
 
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
+
+import { updateUser } from "@/lib/actions/user.action";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -20,14 +23,16 @@ import { Textarea } from "../ui/textarea";
 
 import { ProfileSchema } from "@/lib/validations";
 
-interface Params {
+interface Props {
   clerkId: string;
   user: string;
 }
 
-const Profile = ({ clerkId, user }: Params) => {
+const Profile = ({ clerkId, user }: Props) => {
   const parsedUser = JSON.parse(user);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const router = useRouter();
+  const pathname = usePathname();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof ProfileSchema>>({
@@ -42,10 +47,29 @@ const Profile = ({ clerkId, user }: Params) => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof ProfileSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof ProfileSchema>) {
+    setIsSubmitting(true);
+
+    try {
+      // updateUser
+      await updateUser({
+        clerkId,
+        updateData: {
+          name: values.name,
+          username: values.username,
+          portfolioWebsite: values.portfolioWebsite,
+          location: values.location,
+          bio: values.bio,
+        },
+        path: pathname,
+      });
+
+      router.back();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (
@@ -94,7 +118,7 @@ const Profile = ({ clerkId, user }: Params) => {
         />
         <FormField
           control={form.control}
-          name="portfolio"
+          name="portfolioWebsite"
           render={({ field }) => (
             <FormItem className="space-y-3.5">
               <FormLabel>Portfolio Link</FormLabel>
