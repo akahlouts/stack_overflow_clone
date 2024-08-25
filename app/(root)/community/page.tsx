@@ -8,8 +8,12 @@ import UserCard from "@/components/cards/UserCard";
 
 import { UserFilters } from "@/constants/filters";
 
-const Page = async () => {
-  const results = await getAllUsers({});
+import { SearchParamsProps } from "@/types";
+
+const Page = async ({ searchParams }: SearchParamsProps) => {
+  const results = await getAllUsers({
+    searchQuery: searchParams.q,
+  });
 
   return (
     <>
