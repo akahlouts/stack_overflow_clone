@@ -9,12 +9,17 @@ import QuestionCard from "@/components/cards/QuestionCard";
 
 import { QuestionFilters } from "@/constants/filters";
 
-export default async function Home() {
+import { SearchParamsProps } from "@/types";
+
+export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
 
   if (!userId) return null;
 
-  const result = await getSavedQuestions({ clerkId: userId });
+  const result = await getSavedQuestions({
+    clerkId: userId,
+    searchQuery: searchParams.q,
+  });
 
   return (
     <>
