@@ -13,8 +13,6 @@ const HomeFilters = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
-  console.log(searchParams.toString());
-
   const [active, setActive] = useState("");
 
   const handleTypeClick = (item: string) => {
