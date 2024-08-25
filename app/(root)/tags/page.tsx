@@ -8,8 +8,12 @@ import NoResult from "@/components/shared/NoResult";
 
 import { UserFilters } from "@/constants/filters";
 
-const Page = async () => {
-  const results = await getAllTags({});
+import { SearchParamsProps } from "@/types";
+
+const Page = async ({ searchParams }: SearchParamsProps) => {
+  const results = await getAllTags({
+    searchQuery: searchParams.q,
+  });
 
   return (
     <>
