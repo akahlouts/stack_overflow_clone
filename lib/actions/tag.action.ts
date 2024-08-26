@@ -93,7 +93,9 @@ export async function getQuestionByTagId(params: GetQuestionsByTagIdParams) {
   try {
     connectToDatabase();
 
-    const { tagId, page = 1, pageSize = 10, searchQuery } = params;
+    const { tagId, page = 1, pageSize = 1, searchQuery } = params;
+
+    const skipAmount = (page - 1) * pageSize;
 
     const tagFilter: FilterQuery<ITag> = { _id: tagId };
 
@@ -104,6 +106,8 @@ export async function getQuestionByTagId(params: GetQuestionsByTagIdParams) {
         ? { title: { $regex: searchQuery, $options: "i" } }
         : {},
       options: {
+        skip: skipAmount,
+        limit: pageSize,
         sort: { createdAt: -1 },
       },
       populate: [
@@ -118,7 +122,11 @@ export async function getQuestionByTagId(params: GetQuestionsByTagIdParams) {
 
     const questions = tag.questions;
 
-    return { tagTitle: tag.name, questions };
+    const totalTagQuestions = await Question.countDocuments({ tags: tagId });
+
+    const isNext = totalTagQuestions > skipAmount + questions.length;
+
+    return { tagTitle: tag.name, questions, isNext };
   } catch (error) {
     console.log(error);
     throw error;
