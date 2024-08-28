@@ -123,11 +123,11 @@ export async function upvoteAnswer(params: AnswerVoteParams) {
 
     // Increment author's reputation
     await User.findByIdAndUpdate(userId, {
-      $inc: { reputation: hasupVoted ? -2 : 2 },
+      $inc: { reputation: hasupVoted ? -2 : hasdownVoted ? 0 : 2 },
     });
 
     await User.findByIdAndUpdate(answer.author, {
-      $inc: { reputation: hasupVoted ? -10 : 10 },
+      $inc: { reputation: hasupVoted ? -10 : hasdownVoted ? 20 : 10 },
     });
 
     revalidatePath(path);
@@ -166,11 +166,11 @@ export async function downvoteAnswer(params: AnswerVoteParams) {
 
     // Increment author's reputation
     await User.findByIdAndUpdate(userId, {
-      $inc: { reputation: hasdownVoted ? -2 : 2 },
+      $inc: { reputation: hasdownVoted ? -2 : hasupVoted ? 0 : 2 },
     });
 
     await User.findByIdAndUpdate(answer.author, {
-      $inc: { reputation: hasdownVoted ? -10 : 10 },
+      $inc: { reputation: hasdownVoted ? 10 : hasupVoted ? -20 : -10 },
     });
 
     revalidatePath(path);

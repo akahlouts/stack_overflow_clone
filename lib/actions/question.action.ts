@@ -174,12 +174,12 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
 
     // Increment author's reputation by +1/-1 for upvoting/revoking an upvote to the question
     await User.findByIdAndUpdate(userId, {
-      $inc: { reputation: hasupVoted ? -1 : 1 },
+      $inc: { reputation: hasupVoted ? -1 : hasdownVoted ? 0 : 1 },
     });
 
     // Increment author's reputation by +10/-10 for receiving an upvote/downvote an upvote to the question
     await User.findByIdAndUpdate(question.author, {
-      $inc: { reputation: hasupVoted ? -10 : 10 },
+      $inc: { reputation: hasupVoted ? -10 : hasdownVoted ? 20 : 10 },
     });
 
     revalidatePath(path);
@@ -218,11 +218,11 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
 
     // Increment author's reputation
     await User.findByIdAndUpdate(userId, {
-      $inc: { reputation: hasdownVoted ? -2 : 2 },
+      $inc: { reputation: hasdownVoted ? -1 : hasupVoted ? 0 : 1 },
     });
 
     await User.findByIdAndUpdate(question.author, {
-      $inc: { reputation: hasdownVoted ? -10 : 10 },
+      $inc: { reputation: hasdownVoted ? 10 : hasupVoted ? -20 : -10 },
     });
 
     revalidatePath(path);
