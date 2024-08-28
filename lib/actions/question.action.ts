@@ -115,8 +115,10 @@ export async function createQuestion(params: CreateQuestionParams) {
       tags: tagDocuments,
     });
 
+    const reputation = tagDocuments.length * 2 + 5;
+
     // Increment author's reputation by +5 points for creating a question
-    await User.findByIdAndUpdate(author, { $inc: { reputation: 5 } });
+    await User.findByIdAndUpdate(author, { $inc: { reputation } });
 
     revalidatePath(path);
   } catch (error) {
@@ -179,7 +181,7 @@ export async function upvoteQuestion(params: QuestionVoteParams) {
 
     // Increment author's reputation by +10/-10 for receiving an upvote/downvote an upvote to the question
     await User.findByIdAndUpdate(question.author, {
-      $inc: { reputation: hasupVoted ? -10 : hasdownVoted ? 20 : 10 },
+      $inc: { reputation: hasupVoted ? -5 : hasdownVoted ? 10 : 5 },
     });
 
     revalidatePath(path);
@@ -222,7 +224,7 @@ export async function downvoteQuestion(params: QuestionVoteParams) {
     });
 
     await User.findByIdAndUpdate(question.author, {
-      $inc: { reputation: hasdownVoted ? 10 : hasupVoted ? -20 : -10 },
+      $inc: { reputation: hasdownVoted ? 5 : hasupVoted ? -10 : -5 },
     });
 
     revalidatePath(path);
