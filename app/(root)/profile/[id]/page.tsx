@@ -24,7 +24,7 @@ export async function generateMetadata({
 
   return {
     title: `${userInfo.user.name}'s Profile`,
-    description: `Explore your own or other user's profiles on DevFlow. View contributions, including questions, answers, and earned badges.
+    description: `Explore your own or other user's profiles on Dev Overflow. View contributions, including questions, answers, and earned badges.
     Edit your profile to highlight your expertise, or browse through other's achievements and activities in the community.`,
   };
 }
