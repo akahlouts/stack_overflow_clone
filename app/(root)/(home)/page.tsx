@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 
 import { getQuestions } from "@/lib/actions/question.action";
@@ -13,6 +14,12 @@ import Pagination from "@/components/shared/Pagination";
 import { HomePageFilters } from "@/constants/filters";
 
 import { SearchParamsProps } from "@/types";
+
+export const metadata: Metadata = {
+  title: "Home | Dev Overflow",
+  description:
+    "Welcome to Dev Overflow, a platform for developers to ask questions, answer others, and explore new technologies.",
+};
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const result = await getQuestions({

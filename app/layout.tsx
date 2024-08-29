@@ -24,8 +24,12 @@ export const metadata: Metadata = {
   title: "DevFlow",
   description:
     "A community-driven platform for asking and answering programming questions. Get help, share knowledge, and collaborate with developers from around the world. Explore topics in web development, mobile app development, algorithms, data structures, and more.",
+  metadataBase: new URL(process.env.NEXT_PUBLIC_METADATA_BASE_URL!),
   icons: {
     icon: "/assets/images/site-logo.svg",
+  },
+  openGraph: {
+    images: ["/assets/images/dev-overflow.jpeg"],
   },
 };
 export default function RootLayout({

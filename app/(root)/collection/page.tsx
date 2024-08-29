@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { auth } from "@clerk/nextjs/server";
 
 import { getSavedQuestions } from "@/lib/actions/user.action";
@@ -11,6 +12,12 @@ import Pagination from "@/components/shared/Pagination";
 import { QuestionFilters } from "@/constants/filters";
 
 import { SearchParamsProps } from "@/types";
+
+export const metadata: Metadata = {
+  title: "Collection | Dev Overflow",
+  description:
+    "View and manage your saved questions on Dev Overflow for easy reference.",
+};
 
 export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();

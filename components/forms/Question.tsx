@@ -91,7 +91,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
         toast({
           title: "Question Successfully Posted!",
           description:
-            "Your question is now live on Dev-Overflow. Engage with the community and stay tuned for answers and insights!",
+            "Your question is now live on Dev Overflow. Engage with the community and stay tuned for answers and insights!",
         });
 
         // navigate to home page

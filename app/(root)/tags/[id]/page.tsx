@@ -1,3 +1,5 @@
+import type { Metadata } from "next";
+
 import { getQuestionByTagId } from "@/lib/actions/tag.action";
 
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
@@ -8,6 +10,12 @@ import Pagination from "@/components/shared/Pagination";
 import { IQuestion } from "@/database/question.model";
 
 import { URLProps } from "@/types";
+
+export const metadata: Metadata = {
+  title: "Tag Questions | Dev Overflow",
+  description:
+    "Explore all questions categorized by tags on the Dev Overflow platform.",
+};
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const result = await getQuestionByTagId({

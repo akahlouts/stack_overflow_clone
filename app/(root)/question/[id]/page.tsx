@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -13,6 +14,11 @@ import Votes from "@/components/shared/Votes";
 import { getQuestionById } from "@/lib/actions/question.action";
 import { getUserById } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
+
+export const metadata: Metadata = {
+  title: "Question Details | Dev Overflow",
+  description: "View and interact with questions on Dev Overflow",
+};
 
 const Page = async ({ params, searchParams }) => {
   const { userId: clerkId } = auth();

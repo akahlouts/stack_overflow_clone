@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@clerk/nextjs/server";
@@ -15,6 +16,18 @@ import QuestionTab from "@/components/shared/QuestionTab";
 import AnswersTab from "@/components/shared/AnswersTab";
 
 import { URLProps } from "@/types";
+
+export async function generateMetadata({
+  params,
+}: URLProps): Promise<Metadata> {
+  const userInfo = await getUserInfo({ userId: params.id });
+
+  return {
+    title: `${userInfo.user.name}'s Profile`,
+    description: `Explore your own or other user's profiles on DevFlow. View contributions, including questions, answers, and earned badges.
+    Edit your profile to highlight your expertise, or browse through other's achievements and activities in the community.`,
+  };
+}
 
 const Page = async ({ params, searchParams }: URLProps) => {
   const { userId: clerkId } = auth();
