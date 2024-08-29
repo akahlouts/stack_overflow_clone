@@ -21,6 +21,7 @@ import {
 } from "../ui/form";
 import { Editor } from "@tinymce/tinymce-react";
 import { Button } from "../ui/button";
+import { useToast } from "../ui/use-toast";
 
 interface Props {
   question: string;
@@ -32,6 +33,7 @@ const Answer = ({ question, questionId, authorId }: Props) => {
   const pathname = usePathname();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmittingAI, setIsSubmittingAI] = useState(false);
+  const { toast } = useToast();
 
   const { mode } = useTheme();
   const editorRef = useRef(null);
@@ -60,8 +62,21 @@ const Answer = ({ question, questionId, authorId }: Props) => {
 
         editor.setContent("");
       }
+
+      toast({
+        title: "Answer Submitted!",
+        description:
+          "Your answer has been posted! Keep an eye on the discussion and be ready to clarify or expand if needed.",
+      });
     } catch (error) {
       console.log(error);
+
+      toast({
+        title: "Error Submitting Answer",
+        description:
+          "An error occurred while submitting your answer. Please try again.",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }

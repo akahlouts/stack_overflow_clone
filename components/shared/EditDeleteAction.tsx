@@ -6,6 +6,8 @@ import { usePathname, useRouter } from "next/navigation";
 import { deleteQuestion } from "@/lib/actions/question.action";
 import { deleteAnswer } from "@/lib/actions/answer.action";
 
+import { useToast } from "../ui/use-toast";
+
 interface Props {
   type: string;
   itemId: string;
@@ -14,6 +16,7 @@ interface Props {
 const EditDeleteAction = ({ type, itemId }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
+  const { toast } = useToast();
 
   const handleEdit = () => {
     router.push(`/question/edit/${JSON.parse(itemId)}`);
@@ -23,9 +26,23 @@ const EditDeleteAction = ({ type, itemId }: Props) => {
     if (type === "Question") {
       // Delete question
       await deleteQuestion({ questionId: JSON.parse(itemId), path: pathname });
+
+      toast({
+        title: "Question Deleted!",
+        description:
+          "Your question has been successfully removed. If you need further assistance, feel free to ask again.",
+        variant: "destructive",
+      });
     } else if (type === "Answer") {
       // Delete answer
       await deleteAnswer({ answerId: JSON.parse(itemId), path: pathname });
+
+      toast({
+        title: "Answer Deleted!",
+        description:
+          "Your answer has been successfully removed from the question thread.",
+        variant: "destructive",
+      });
     }
   };
 

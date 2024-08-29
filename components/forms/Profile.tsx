@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "../ui/textarea";
+import { useToast } from "../ui/use-toast";
 
 import { ProfileSchema } from "@/lib/validations";
 
@@ -33,6 +34,7 @@ const Profile = ({ clerkId, user }: Props) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const router = useRouter();
   const pathname = usePathname();
+  const { toast } = useToast();
 
   // 1. Define your form.
   const form = useForm<z.infer<typeof ProfileSchema>>({
@@ -64,9 +66,20 @@ const Profile = ({ clerkId, user }: Props) => {
         path: pathname,
       });
 
+      toast({
+        title: "Profile updated successfully!",
+      });
+
       router.back();
     } catch (error) {
       console.log(error);
+
+      toast({
+        title: "Profile update failed!",
+        description:
+          "Something went wrong while updating your profile. Please try again",
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }

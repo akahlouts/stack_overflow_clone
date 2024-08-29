@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Badge } from "../ui/badge";
+import { useToast } from "../ui/use-toast";
 
 interface Props {
   type?: string;
@@ -36,6 +37,7 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
   const { mode } = useTheme();
   const editorRef = useRef(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const { toast } = useToast();
 
   const router = useRouter();
   const pathname = usePathname();
@@ -68,6 +70,12 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
           path: pathname,
         });
 
+        toast({
+          title: "Question Updated!",
+          description:
+            "Your changes have been saved. Make sure to review any new comments or answers based on your edits!",
+        });
+
         router.push(`/question/${parsedQuestionDetails._id}`);
       } else {
         // make an async call to your API -> create a question
@@ -80,10 +88,23 @@ const Question = ({ type, mongoUserId, questionDetails }: Props) => {
           path: pathname,
         });
 
+        toast({
+          title: "Question Successfully Posted!",
+          description:
+            "Your question is now live on Dev-Overflow. Engage with the community and stay tuned for answers and insights!",
+        });
+
         // navigate to home page
         router.push("/");
       }
     } catch (error) {
+      console.log(error);
+
+      toast({
+        title: `Error ${type === "Edit" ? "Updating" : "Creating"} Question`,
+        description: `An error occurred while ${type === "Edit" ? "updating" : "creating"} your question. Please try again.`,
+        variant: "destructive",
+      });
     } finally {
       setIsSubmitting(false);
     }
