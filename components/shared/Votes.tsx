@@ -42,6 +42,13 @@ const Votes = ({
   const { toast } = useToast();
 
   const handleSave = async () => {
+    if (!userId) {
+      return toast({
+        title: "Please log in",
+        description: "You must be logged in to perform this action",
+      });
+    }
+
     await toggleSaveQuestion({
       userId: JSON.parse(userId),
       questionId: JSON.parse(itemId),
