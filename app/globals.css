@@ -151,6 +151,28 @@ code {
   background: linear-gradient(129deg, #ff7000 0%, #e2995f 100%) !important;
 }
 
+.cl-internal-yelct8 {
+  height: 24px !important;
+  -webkit-box-pack: center !important ;
+  justify-content: center !important;
+  margin-right: 6px !important;
+}
+
+.cl-formButtonPrimary {
+  box-shadow: none !important;
+}
+
+.cl-footerActionLink {
+  background: linear-gradient(129deg, #ff7000, #e2995f) !important;
+  background-clip: text !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+}
+
+.cl-internal-4axjga:focus {
+  box-shadow: rgb(255, 112, 0, 0.3) 0px 0px 0px 4px;
+}
+
 .hash-span {
   margin-top: -140px;
   padding-bottom: 140px;

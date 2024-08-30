@@ -40,7 +40,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${inter.variable} ${spaceGrotesk.variable}`}>
-        <ClerkProvider>
+        <ClerkProvider
+          appearance={{
+            layout: {
+              logoImageUrl: "/assets/images/logo.png",
+            },
+          }}
+        >
           <ThemeProvider>{children}</ThemeProvider>
         </ClerkProvider>
       </body>
