@@ -23,7 +23,7 @@ export const metadata: Metadata = {
 export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
 
-  if (!userId) return redirect("/sign-in");
+  if (!userId) redirect("/sign-in");
 
   const result = await getSavedQuestions({
     clerkId: userId,
