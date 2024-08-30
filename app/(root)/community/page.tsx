@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 
 import { getAllUsers } from "@/lib/actions/user.action";
 
 import LocalSearchbar from "@/components/shared/search/LocalSearchbar";
 import Filter from "@/components/shared/Filter";
-import UserCard from "@/components/cards/UserCard";
 import Pagination from "@/components/shared/Pagination";
 
 import { UserFilters } from "@/constants/filters";
@@ -23,6 +23,10 @@ const Page = async ({ searchParams }: SearchParamsProps) => {
     searchQuery: searchParams.q,
     filter: searchParams.filter,
     page: searchParams.page ? +searchParams.page : 1,
+  });
+
+  const UserCard = dynamic(() => import("@/components/cards/UserCard"), {
+    ssr: false,
   });
 
   return (
