@@ -75,7 +75,7 @@ const GlobalResult = () => {
 
         {isLoading ? (
           <div className="flex-center flex-col px-5">
-            <ReloadIcon className="my-2 h-10 w-10 animate-spin text-primary-500" />
+            <ReloadIcon className="my-2 size-10 animate-spin text-primary-500" />
             <p className="text-dark200_light800 body-regular">
               Browsing the entire database
             </p>
@@ -87,7 +87,7 @@ const GlobalResult = () => {
                 <Link
                   href={renderLink(item.type, item.id)}
                   key={item.type + item.id + index}
-                  className="flex w-full cursor-pointer items-start gap-3 px-5 py-2.5 hover:bg-light-700/50 dark:bg-dark-500/50"
+                  className="flex w-full cursor-pointer items-start gap-3 px-5 py-2.5 hover:bg-light-700/50 dark:hover:bg-dark-500/50"
                 >
                   <Image
                     src="/assets/icons/tag.svg"
@@ -109,6 +109,7 @@ const GlobalResult = () => {
               ))
             ) : (
               <div className="flex-center flex-col px-5">
+                <p className="text-5xl">🫣</p>
                 <p className="text-dark200_light800 body-regular px-5 py-2.5">
                   Oops, no results found
                 </p>

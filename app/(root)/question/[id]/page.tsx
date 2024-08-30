@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description: "View and interact with questions on Dev Overflow",
 };
 
-const Page = async ({ params, searchParams }) => {
+const Page = async ({ params, searchParams }: any) => {
   const { userId: clerkId } = auth();
 
   let mongoUser;
