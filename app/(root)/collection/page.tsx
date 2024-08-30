@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 
 import { getSavedQuestions } from "@/lib/actions/user.action";
@@ -22,7 +23,7 @@ export const metadata: Metadata = {
 export default async function Home({ searchParams }: SearchParamsProps) {
   const { userId } = auth();
 
-  if (!userId) return null;
+  if (!userId) return redirect("/sign-in");
 
   const result = await getSavedQuestions({
     clerkId: userId,

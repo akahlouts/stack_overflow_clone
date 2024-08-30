@@ -71,12 +71,21 @@ const Answer = ({ question, questionId, authorId }: Props) => {
     } catch (error) {
       console.log(error);
 
-      toast({
-        title: "Error Submitting Answer",
-        description:
-          "An error occurred while submitting your answer. Please try again.",
-        variant: "destructive",
-      });
+      if (authorId) {
+        toast({
+          title: "Error Submitting Answer",
+          description:
+            "An error occurred while submitting your answer. Please try again.",
+          variant: "destructive",
+        });
+      } else {
+        toast({
+          title: "Error Submitting Answer",
+          description:
+            "You must be logged in to submit an answer. Please log in and try again.",
+          variant: "destructive",
+        });
+      }
     } finally {
       setIsSubmitting(false);
     }

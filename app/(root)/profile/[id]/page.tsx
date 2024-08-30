@@ -115,7 +115,7 @@ const Page = async ({ params, searchParams }: URLProps) => {
           </TabsList>
           <TabsContent
             value="top-posts"
-            // className="mt-5 flex w-full flex-col gap-6"
+            className="mt-5 flex w-full flex-col gap-6"
           >
             <QuestionTab
               searchParams={searchParams}
