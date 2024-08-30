@@ -20,35 +20,15 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
 
     const { userId } = params;
 
-    const user = await User.findById(userId);
-
-    if (!user) throw new Error("User not found");
-
     // Find interactions for the user and group by tags...
     // Interaction...
-    const tagsList = [];
 
     const userTags = await Interaction.find({
       user: userId,
       action: "ask_question",
-    });
+    }).populate({ path: "tags", model: Tag, select: "_id name" });
 
-    for (let i = 0; i < userTags.length; i++) {
-      const element = userTags[i];
-      for (let k = 0; k < element.tags.length; k++) {
-        const tag = element.tags[k];
-        tagsList.push(tag);
-      }
-    }
-
-    const interactedTags = [];
-    for (const element of tagsList) {
-      const tag = await Tag.findById({ _id: element });
-
-      if (interactedTags.length !== 3) {
-        interactedTags.push(tag);
-      }
-    }
+    const interactedTags = userTags.flatMap((element) => element.tags);
 
     return interactedTags;
   } catch (error) {
