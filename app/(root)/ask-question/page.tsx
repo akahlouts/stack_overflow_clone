@@ -7,9 +7,9 @@ import { getUserById } from "@/lib/actions/user.action";
 import Question from "@/components/forms/Question";
 
 export const metadata: Metadata = {
-  title: "Ask a Question | Dev Overflow",
+  title: "Ask a Question | DevOverflow",
   description:
-    "Got a question? Post it on Dev Overflow and get answers from the developer community.",
+    "Got a question? Post it on DevOverflow and get answers from the developer community.",
 };
 
 const Page = async () => {

@@ -8,9 +8,9 @@ import Profile from "@/components/forms/Profile";
 import { ParamsProps } from "@/types";
 
 export const metadata: Metadata = {
-  title: "Edit Profile | Dev Overflow",
+  title: "Edit Profile | DevOverflow",
   description:
-    "Update your profile information on Dev Overflow to keep your account up-to-date.",
+    "Update your profile information on DevOverflow to keep your account up-to-date.",
 };
 
 const Page = async ({ params }: ParamsProps) => {

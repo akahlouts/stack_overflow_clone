@@ -20,9 +20,7 @@ import { HomePageFilters } from "@/constants/filters";
 import { SearchParamsProps } from "@/types";
 
 export const metadata: Metadata = {
-  title: "Home | Dev Overflow",
-  description:
-    "Welcome to Dev Overflow, a platform for developers to ask questions, answer others, and explore new technologies.",
+  title: "Home | DevOverflow",
 };
 
 export default async function Home({ searchParams }: SearchParamsProps) {

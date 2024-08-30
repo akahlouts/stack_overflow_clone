@@ -16,8 +16,8 @@ import { getUserById } from "@/lib/actions/user.action";
 import { formatAndDivideNumber, getTimestamp } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Question Details | Dev Overflow",
-  description: "View and interact with questions on Dev Overflow",
+  title: "Question Details | DevOverflow",
+  description: "View and interact with questions on DevOverflow",
 };
 
 const Page = async ({ params, searchParams }: any) => {

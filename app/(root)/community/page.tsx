@@ -13,9 +13,9 @@ import { UserFilters } from "@/constants/filters";
 import { SearchParamsProps } from "@/types";
 
 export const metadata: Metadata = {
-  title: "Community | Dev Overflow",
+  title: "Community | DevOverflow",
   description:
-    "Join the Dev Overflow community, connect with like-minded developers, and engage in discussions",
+    "Join the DevOverflow community, connect with like-minded developers, and engage in discussions",
 };
 
 const Page = async ({ searchParams }: SearchParamsProps) => {

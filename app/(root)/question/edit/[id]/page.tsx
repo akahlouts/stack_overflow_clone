@@ -9,9 +9,9 @@ import Question from "@/components/forms/Question";
 import { ParamsProps } from "@/types";
 
 export const metadata: Metadata = {
-  title: "Edit Question | Dev Overflow",
+  title: "Edit Question | DevOverflow",
   description:
-    "Update and refine your question on Dev Overflow to get better responses from the community.",
+    "Update and refine your question on DevOverflow to get better responses from the community.",
 };
 
 const Page = async ({ params }: ParamsProps) => {

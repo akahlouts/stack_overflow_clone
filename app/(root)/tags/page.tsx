@@ -13,7 +13,7 @@ import { TagFilters } from "@/constants/filters";
 import { SearchParamsProps } from "@/types";
 
 export const metadata: Metadata = {
-  title: "Tags | Dev Overflow",
+  title: "Tags | DevOverflow",
   description:
     "Discover and share coding tips, tricks, and best practices across various programming languages, frameworks, and tools.",
 };

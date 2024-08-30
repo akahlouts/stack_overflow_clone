@@ -15,9 +15,9 @@ import { QuestionFilters } from "@/constants/filters";
 import { SearchParamsProps } from "@/types";
 
 export const metadata: Metadata = {
-  title: "Collection | Dev Overflow",
+  title: "Collection | DevOverflow",
   description:
-    "View and manage your saved questions on Dev Overflow for easy reference.",
+    "View and manage your saved questions on DevOverflow for easy reference.",
 };
 
 export default async function Home({ searchParams }: SearchParamsProps) {

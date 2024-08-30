@@ -10,9 +10,9 @@ import Pagination from "@/components/shared/Pagination";
 import { URLProps } from "@/types";
 
 export const metadata: Metadata = {
-  title: "Tag Questions | Dev Overflow",
+  title: "Tag Questions | DevOverflow",
   description:
-    "Explore all questions categorized by tags on the Dev Overflow platform.",
+    "Explore all questions categorized by tags on the DevOverflow platform.",
 };
 
 const Page = async ({ params, searchParams }: URLProps) => {
