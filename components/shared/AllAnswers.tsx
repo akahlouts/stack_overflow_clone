@@ -45,11 +45,11 @@ const AllAnswers = async ({
           <article key={answer._id} className="light-border border-b py-10">
             <div className="mb-5 flex flex-col-reverse justify-between gap-5 sm:flex-row sm:items-center sm:gap-2">
               <Link
-                href={`/profile/${answer.author.clerkId}`}
+                href={`/profile/${answer?.author?.clerkId}`}
                 className="flex flex-1 items-start gap-1 sm:items-center"
               >
                 <Image
-                  src={answer.author.picture}
+                  src={answer?.author?.picture}
                   width={18}
                   height={18}
                   alt="profile"
@@ -57,7 +57,7 @@ const AllAnswers = async ({
                 />
                 <div className="flex flex-col sm:flex-row sm:items-center">
                   <p className="body-semibold text-dark300_light700">
-                    {answer.author.name}
+                    {answer?.author?.name ? answer?.author?.name : "No User"}
                   </p>
 
                   <p className="small-regular text-light400_light500 ml-1 mt-0.5 line-clamp-1">

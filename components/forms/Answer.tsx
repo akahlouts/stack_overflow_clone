@@ -3,7 +3,8 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useTheme } from "@/context/ThemeProvider";
+import { useTheme } from "next-themes";
+// import { useTheme } from "@/context/ThemeProvider";
 import { useForm } from "react-hook-form";
 
 import { z } from "zod";
@@ -35,7 +36,8 @@ const Answer = ({ question, questionId, authorId }: Props) => {
   const [isSubmittingAI, setIsSubmittingAI] = useState(false);
   const { toast } = useToast();
 
-  const { mode } = useTheme();
+  // const { mode } = useTheme();
+  const { theme } = useTheme();
   const editorRef = useRef(null);
   const form = useForm<z.infer<typeof AnswerSchema>>({
     resolver: zodResolver(AnswerSchema),
@@ -198,8 +200,8 @@ const Answer = ({ question, questionId, authorId }: Props) => {
                         "alignright alignjustify | bullist numlist",
                       content_style:
                         "body { font-family:Inter; font-size:16px }",
-                      skin: mode === "dark" ? "oxide-dark" : "oxide",
-                      content_css: mode === "dark" ? "dark" : "light",
+                      skin: theme === "dark" ? "oxide-dark" : "oxide",
+                      content_css: theme === "dark" ? "dark" : "light",
                     }}
                   />
                 </FormControl>

@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { clerkClient } from "@clerk/nextjs/server";
-import { FilterQuery } from "mongoose";
+import { FilterQuery, startSession } from "mongoose";
 
 import { connectToDatabase } from "../mongoose";
 
@@ -10,6 +10,7 @@ import User from "@/database/user.model";
 import Question from "@/database/question.model";
 import Tag from "@/database/tag.model";
 import Answer from "@/database/answer.model";
+import Interaction from "@/database/interaction.model";
 
 import { assignBadges } from "../utils";
 
@@ -78,6 +79,9 @@ export async function updateUser(params: UpdateUserParams) {
 }
 
 export async function deleteUser(params: DeleteUserParams) {
+  const session = await startSession();
+  session.startTransaction();
+
   try {
     connectToDatabase();
 
@@ -89,26 +93,82 @@ export async function deleteUser(params: DeleteUserParams) {
       throw new Error("User not found");
     }
 
-    // Delete user from database
-    // and questions, answers, comments, etc.
+    // 1. Delete the user
+    const deletedUser = await User.findByIdAndDelete({ _id: user._id }).session(
+      session
+    );
 
-    // get user question ids
-    // const userQuestionIds = await Question.find({ author: user._id }).distinct(
-    //   "_id"
-    // );
+    // 2. Delete all questions authored by the user
+    const userQuestions = await Question.find({ author: user._id }).session(
+      session
+    );
 
-    // delete user questions
-    await Question.deleteMany({ author: user._id });
+    for (const question of userQuestions) {
+      // Remove the question from tags' questions array
+      await Tag.updateMany(
+        { questions: question._id },
+        { $pull: { questions: question._id } }
+      ).session(session);
 
-    // TODO: delete user answers, comments, etc..
+      // Delete the question
+      await question.remove({ session });
+    }
 
-    // delete user from database
-    const deletedUser = await User.findOneAndDelete(user._id);
+    // 3. Delete all answers authored by the user
+    const userAnswers = await Answer.find({ author: user._id }).session(
+      session
+    );
+
+    for (const answer of userAnswers) {
+      // Remove the answer from the associated question's answers array
+      await Question.updateOne(
+        { _id: answer.question },
+        { $pull: { answers: answer._id } }
+      ).session(session);
+
+      // Delete the answer
+      await answer.remove({ session });
+    }
+
+    // 4. Remove references to the user in upvotes and downvotes arrays in both questions and answers
+    await Question.updateMany(
+      { upvotes: user._id },
+      { $pull: { upvotes: user._id } }
+    ).session(session);
+    await Question.updateMany(
+      { downvotes: user._id },
+      { $pull: { downvotes: user._id } }
+    ).session(session);
+
+    await Answer.updateMany(
+      { upvotes: user._id },
+      { $pull: { upvotes: user._id } }
+    ).session(session);
+    await Answer.updateMany(
+      { downvotes: user._id },
+      { $pull: { downvotes: user._id } }
+    ).session(session);
+
+    // 5. Update tags by removing the user from followers array
+    // await Tag.updateMany(
+    //   { followers: user._id },
+    //   { $pull: { followers: user._id } }
+    // ).session(session);
+
+    // 6. Delete all interactions related to the user
+    await Interaction.deleteMany({ user: user._id }).session(session);
+
+    // Commit the transaction
+    await session.commitTransaction();
+    session.endSession();
+
+    console.log(`User and all related data deleted successfully`);
 
     return deletedUser;
-  } catch (error) {
-    console.log(error);
-    throw error;
+  } catch (error: any) {
+    await session.abortTransaction();
+    session.endSession();
+    console.error(`Error deleting user and related data: ${error.message}`);
   }
 }
 
@@ -417,12 +477,3 @@ export async function getUserAnswers(params: GetUserStatsParams) {
     throw error;
   }
 }
-
-// export async function getAllUsers(params: GetAllUsersParams) {
-//   try {
-//     connectToDatabase();
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// }
