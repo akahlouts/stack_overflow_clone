@@ -12,6 +12,7 @@ import {
   GetTopInteractedTagsParams,
 } from "./shared.types";
 import { FilterQuery } from "mongoose";
+import Interaction from "@/database/interaction.model";
 
 export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
   try {
@@ -25,11 +26,31 @@ export async function getTopInteractedTags(params: GetTopInteractedTagsParams) {
 
     // Find interactions for the user and group by tags...
     // Interaction...
+    const tagsList = [];
 
-    return [
-      { _id: "1", name: "tag" },
-      { _id: "2", name: "tag2" },
-    ];
+    const userTags = await Interaction.find({
+      user: userId,
+      action: "ask_question",
+    });
+
+    for (let i = 0; i < userTags.length; i++) {
+      const element = userTags[i];
+      for (let k = 0; k < element.tags.length; k++) {
+        const tag = element.tags[k];
+        tagsList.push(tag);
+      }
+    }
+
+    const interactedTags = [];
+    for (const element of tagsList) {
+      const tag = await Tag.findById({ _id: element });
+
+      if (interactedTags.length !== 3) {
+        interactedTags.push(tag);
+      }
+    }
+
+    return interactedTags;
   } catch (error) {
     console.log(error);
     throw error;
