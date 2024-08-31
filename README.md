@@ -10,13 +10,13 @@ DevOverFlow is a community-driven platform where developers can ask and answer p
 
 - **Next.js**: A React framework that enables Server-Side Rendering (SSR) and Static Site Generation (SSG).
 - **TypeScript**: Strongly typed programming language that builds on JavaScript, giving you better tooling at any scale.
-- **OpenAI**: For generating intelligent, context-aware answers to programming questions.
 - **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
 - **ShadCN UI**: Component library with accessible and customizable components.
 - **Clerk**: Authentication solution for user management, ensuring secure and reliable sign-in options.
 - **Zod**: TypeScript-first schema declaration and validation library.
 - **React Hook Form**: A performant, flexible, and extensible form library for React.
 - **Node.js**: JavaScript runtime for executing code server-side.
+- **OpenAI**: For generating intelligent, context-aware answers to programming questions.
 - **Mongoose**: Elegant MongoDB object modeling for Node.js.
 - **MongoDB**: NoSQL database used to store and manage user data and questions.
 
@@ -77,7 +77,8 @@ DevOverFlow is a community-driven platform where developers can ask and answer p
 4. **Run the development server**:
 
 ```bash
- npm run dev
+   npm run dev
 
-Open http://localhost:3000 to see your app.
 ```
+
+  Open http://localhost:3000 to see your app.
