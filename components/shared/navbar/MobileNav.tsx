@@ -78,13 +78,13 @@ const MobileNav = () => {
             Dev<span className="text-primary-500">Overflow</span>
           </p>
         </Link>
-        <div>
+        <div className="no-scrollbar flex h-[90vh] grow flex-col justify-between overflow-y-auto">
           <SheetClose asChild>
             <NavContent />
           </SheetClose>
 
           <SignedOut>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-3 justify-end">
               <SheetClose asChild>
                 <Link href="/sign-in">
                   <Button className="small-medium btn-secondary min-h-[41px] w-full rounded-lg px-4 py-3 shadow-none focus-visible:ring-0 focus-visible:ring-offset-0">
