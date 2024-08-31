@@ -76,9 +76,9 @@ DevOverFlow is a community-driven platform where developers can ask and answer p
 
 4. **Run the development server**:
 
-```bash
+   ```bash
    npm run dev
+   
+   ```
 
-```
-
-  Open http://localhost:3000 to see your app.
+   Open http://localhost:3000 to see your app.
